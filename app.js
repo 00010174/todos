@@ -94,6 +94,13 @@ app.get('/:id/update', (req, res) => {
     })
 })
 
+app.get('/api/v1/todos', (req, res)=>{
+    fs.readFile('./data/todos.json', (err, data) => {
+        if (err) throw err
+        const todos = JSON.parse(data)
+        res.json(todos)
+    })
+})
 
 app.listen(PORT, (err) => {
     if (err) throw err

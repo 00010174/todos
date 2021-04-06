@@ -6,7 +6,7 @@ This app helps to save your todos in the server
 
 1. Download the sourse code
 ```bash
-git clone {url to the github repo}
+git clone https://github.com/00010174/todos.git
 ```
 
 or just download the *.zip file
@@ -26,3 +26,4 @@ node app
 - pug
 
 #### Lint to github repository
+https://github.com/00010174/todos.git

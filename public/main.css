@@ -65,7 +65,7 @@ input {
 }
 
 .todo:hover {
-    background: lightblue;
+    background: beige;
 }
 
 .error,
@@ -91,7 +91,7 @@ input {
     text-decoration: none;
     font-size: 1rem;
     padding: 5px 10px;
-    background: tomato;
+    background: crimson;
     color: white;
 }
 
@@ -104,4 +104,15 @@ input {
 .done {
     color: black;
     text-decoration: line-through;
+}
+
+h2,h4 {
+    text-align: center;
+    margin-bottom: 16px;
+    color: blue;
+}
+
+h4 {
+    color: red;
+    margin-top: 16px;
 }

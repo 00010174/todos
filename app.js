@@ -62,11 +62,11 @@ app.post('/add', (req, res) => {
 
 app.get('/:id/delete', (req, res) => {
     const id = req.params.id
-    fs.readFile('./data/todos.json', (err, data) =>{
+    fs.readFile('./data/todos.json', (err, data) => {
         if (err) throw err
         const todos = JSON.parse(data)
         const filteredTodos = todos.filter(todo => todo.id !== id)
-        fs.writeFile('./data/todos.json', JSON.stringify(filteredTodos), (err) =>{
+        fs.writeFile('./data/todos.json', JSON.stringify(filteredTodos), (err) => {
             if (err) throw err
             res.render('home', {todos: filteredTodos, deleted: true})
         })
@@ -75,18 +75,18 @@ app.get('/:id/delete', (req, res) => {
 
 app.get('/:id/update', (req, res) => {
     const id = req.params.id
-    fs.readFile('./data/todos.json', (err, data) =>{
+    fs.readFile('./data/todos.json', (err, data) => {
         if (err) throw err
         const todos = JSON.parse(data)
-        const todo = todos.filter(todo=> todo.id === id)[0]
+        const todo = todos.filter(todo => todo.id === id)[0]
 
         const todoIndex = todos.indexOf(todo)
         const splicedTodo = todos.splice(todoIndex, 1)[0]
 
-        splicedTodo.done = true
+        splicedTodo.done = !splicedTodo.done
         todos.push(splicedTodo)
 
-        fs.writeFile('./data/todos.json', JSON.stringify(todos), (err)=>{
+        fs.writeFile('./data/todos.json', JSON.stringify(todos), (err) => {
             if (err) throw err
             res.render('home', {todos: todos})
         })
@@ -94,7 +94,7 @@ app.get('/:id/update', (req, res) => {
     })
 })
 
-app.get('/api/v1/todos', (req, res)=>{
+app.get('/api/v1/todos', (req, res) => {
     fs.readFile('./data/todos.json', (err, data) => {
         if (err) throw err
         const todos = JSON.parse(data)
@@ -102,9 +102,49 @@ app.get('/api/v1/todos', (req, res)=>{
     })
 })
 
+app.post('/api/v1/:id/update', (req, res) => {
+    const id = req.params.id
+    fs.readFile('./data/todos.json', (err, data) => {
+        if (err) throw err
+        const todos = JSON.parse(data)
+        const todo = todos.filter(todo => todo.id === id)[0]
+
+        const todoIndex = todos.indexOf(todo)
+        const splicedTodo = todos.splice(todoIndex, 1)[0]
+
+        splicedTodo.done = !splicedTodo.done
+        todos.push(splicedTodo)
+        fs.writeFile('./data/todos.json', JSON.stringify(todos), (err) => {
+            if (err) throw err
+            const responseData = {
+                success: true,
+                list: todos
+            }
+            res.json(responseData)
+        })
+    })
+})
+
+app.post('/api/v1/:id/delete', (req, res) => {
+    const id = req.params.id
+    fs.readFile('./data/todos.json', (err, data) => {
+        if (err) throw err
+        const todos = JSON.parse(data)
+        const filteredTodos = todos.filter(todo => todo.id !== id)
+        fs.writeFile('./data/todos.json', JSON.stringify(filteredTodos), (err) => {
+            if (err) throw err
+            const responseData = {
+                success: true,
+                list: filteredTodos
+            }
+            res.json(responseData)
+        })
+    })
+})
+
 app.listen(PORT, (err) => {
     if (err) throw err
-    console.log('This app is running on port ${PORT}')
+    console.log(`This app is running on port ${PORT}`)
 })
 
 function id() {

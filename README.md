@@ -29,7 +29,7 @@ node app
 https://github.com/00010174/todos.git
 
 #### Link to application on Glitch
-https://lacy-honored-twine.glitch.me/
+https://future-wholesale-newsboy.glitch.me/
 
 ## You can use this as REST API
 
